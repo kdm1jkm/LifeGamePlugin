@@ -27,7 +27,7 @@ public class ShopEventListener implements Listener {
     }
 
     @EventHandler
-    public void onPlace(PlayerInteractEvent event) {
+    public void onClickBlock(PlayerInteractEvent event) {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (event.getClickedBlock().getState() instanceof Sign) {
                 Sign sign = (Sign) event.getClickedBlock().getState();
@@ -50,9 +50,8 @@ public class ShopEventListener implements Listener {
                             }
                         }
 
-                        if (waitingList.containsKey(p.getUniqueId())) {
-                            waitingList.remove(p.getUniqueId());
-                        }
+                        waitingList.remove(p.getUniqueId());
+
                         waitingList.put(p.getUniqueId(), new SellInfo(sellItemMaterial, itemCount, sellPrice));
                         p.sendMessage(ChatColor.YELLOW + "[LifeGame] " + ChatColor.WHITE + sellItem +
                                 "아이템을 몇 개 판매하시겠습니까? (현재 보유 갯수: " + itemCount + "개)");
@@ -85,24 +84,21 @@ public class ShopEventListener implements Listener {
 
                     //인벤토리에서 아이템 제거
                     int leftAmount = amount;
-                    while (leftAmount > 0) {
-                        int inventoryIndex = 0;
+                    int i = 0;
 
+                    while (leftAmount > 0 && i < 36) {
+                        ItemStack curItem = p.getInventory().getItem(i);
                         //일치하는 아이템 찾기
-                        while (p.getInventory().getItem(inventoryIndex) != null || inventoryIndex < 36) {
-                            if (p.getInventory().getItem(inventoryIndex) != null) {
-                                if (p.getInventory().getItem(inventoryIndex).getType().equals(info.sellItem)) {
-                                    break;
-                                }
-                            }
-                            inventoryIndex++;
+
+                        while (curItem == null || !curItem.getType().equals(info.sellItem)) {
+                            curItem = p.getInventory().getItem(++i);
                         }
 
-                        if (leftAmount - p.getInventory().getItem(inventoryIndex).getAmount() > 0) {
-                            leftAmount -= p.getInventory().getItem(inventoryIndex).getAmount();
-                            p.getInventory().getItem(inventoryIndex).setAmount(0);
+                        if (leftAmount - curItem.getAmount() > 0) {
+                            leftAmount -= curItem.getAmount();
+                            curItem.setAmount(0);
                         } else {
-                            p.getInventory().getItem(inventoryIndex).setAmount(p.getInventory().getItem(inventoryIndex).getAmount() - leftAmount);
+                            curItem.setAmount(curItem.getAmount() - leftAmount);
                             leftAmount = 0;
                         }
                     }
