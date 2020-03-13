@@ -1,7 +1,7 @@
 package com.kdm1jkm.lifegame;
 
-import com.kdm1jkm.lifegame.commands.MoneyCommand;
-import com.kdm1jkm.lifegame.commands.MoneyCommandTapCompletion;
+import com.kdm1jkm.lifegame.money.MoneyCommand;
+import com.kdm1jkm.lifegame.money.MoneyCommandTapCompletion;
 import com.kdm1jkm.lifegame.shop.ShopEventListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;

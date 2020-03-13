@@ -1,4 +1,4 @@
-package com.kdm1jkm.lifegame.commands;
+package com.kdm1jkm.lifegame.money;
 
 import com.kdm1jkm.lifegame.PlayerData;
 import org.bukkit.Bukkit;
