@@ -6,6 +6,7 @@ import org.json.simple.parser.JSONParser;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.nio.channels.FileLockInterruptionException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class PlayerData {
                 result.getPlayer(UUID.fromString(key)).money.set(money);
             }
             fr.close();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
 
         return result;
@@ -66,11 +67,8 @@ public class PlayerData {
     public void Save(String dir, String fileName) {
         JSONObject main = new JSONObject();
 
-        Iterator iterator = playerMap.keySet().iterator();
-
-        while (iterator.hasNext()) {
+        for (UUID key : playerMap.keySet()) {
             JSONObject playerInfo = new JSONObject();
-            UUID key = (UUID) iterator.next();
 
             playerInfo.put("money", playerMap.get(key).money.get());
 
@@ -79,28 +77,28 @@ public class PlayerData {
 
         try {
             File d = new File(dir);
-            d.mkdirs();
+            if (!d.mkdirs()) throw new FileLockInterruptionException();
 
             File file = new File(dir + File.separator + fileName);
             FileWriter fw = new FileWriter(file);
             fw.write(main.toJSONString());
             fw.flush();
             fw.close();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
     public class Player {
         public Money money;
 
-        public Player() {
+        private Player() {
             money = new Money(0);
         }
 
         public class Money {
             private int num;
 
-            public Money(int money) {
+            private Money(int money) {
                 num = money;
             }
 
