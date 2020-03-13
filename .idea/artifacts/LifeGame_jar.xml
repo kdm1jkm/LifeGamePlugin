@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="LifeGame:jar">
+    <output-path>D:/Saves/마크서버/1.14 테스트/plugins</output-path>
+    <root id="archive" name="LifeGame.jar">
+      <element id="module-output" name="LifeGame" />
+    </root>
+  </artifact>
+</component>

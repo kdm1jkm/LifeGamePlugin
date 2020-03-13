@@ -1,0 +1,7 @@
+name: LifeGame
+version: ${project.version}
+main: com.kdm1jkm.lifegame.LifeGame
+api-version: 1.13
+commands:
+  money:
+    description: money commands for LifeGame
