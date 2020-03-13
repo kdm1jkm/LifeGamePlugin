@@ -20,7 +20,6 @@ public class MoneyCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
         if (sender instanceof Player) {
             Player p = (Player) sender;
             UUID playerUuid = p.getUniqueId();
@@ -36,6 +35,10 @@ public class MoneyCommand implements CommandExecutor {
 
                 case 3:
                     Player otherPlayer = Bukkit.getPlayer(args[1]);
+                    if (otherPlayer == null) {
+                        sender.sendMessage(ChatColor.YELLOW + "[LifeGame] " + ChatColor.RED + "유효하지 않은 플레이어명 입니다.");
+                        break;
+                    }
                     UUID otherPlayerUuid = otherPlayer.getUniqueId();
                     String otherPlayerName = otherPlayer.getName();
 
