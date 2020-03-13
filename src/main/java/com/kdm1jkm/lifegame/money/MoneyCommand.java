@@ -87,7 +87,7 @@ public class MoneyCommand implements CommandExecutor {
 
             return true;
         } else {
-            sender.sendMessage(ChatColor.RED + "콘솔에서는 이 명령어를 실행할 수 없습니다.");
+            sender.sendMessage(ChatColor.YELLOW + "[LifeGame] " + ChatColor.RED + "콘솔에서는 이 명령어를 실행할 수 없습니다.");
         }
 
         return false;
