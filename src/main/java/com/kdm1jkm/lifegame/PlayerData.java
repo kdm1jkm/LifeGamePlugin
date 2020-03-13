@@ -1,6 +1,5 @@
 package com.kdm1jkm.lifegame;
 
-import org.bukkit.Bukkit;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -28,8 +27,6 @@ public class PlayerData {
 
             FileReader fr = new FileReader(new File(filePath));
 
-            Bukkit.getLogger().info("[LifeGame] Successfully Read Player Data File.");
-
             main = (JSONObject) parser.parse(fr);
 
             Iterator iterator = main.keySet().iterator();
@@ -43,9 +40,6 @@ public class PlayerData {
 
                 result.addPlayer(UUID.fromString(key));
                 result.getPlayer(UUID.fromString(key)).money.set(money);
-
-                Bukkit.getLogger().info("[LifeGame] UUID: " + key);
-                Bukkit.getLogger().info("[LifeGame] money: " + money);
             }
             fr.close();
         } catch (Exception e) {
