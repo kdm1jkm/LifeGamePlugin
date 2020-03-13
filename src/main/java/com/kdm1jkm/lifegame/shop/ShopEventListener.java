@@ -28,7 +28,7 @@ public class ShopEventListener implements Listener {
 
     @EventHandler
     public void onPlace(PlayerInteractEvent event) {
-        if (event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (event.getClickedBlock().getState() instanceof Sign) {
                 Sign sign = (Sign) event.getClickedBlock().getState();
 
