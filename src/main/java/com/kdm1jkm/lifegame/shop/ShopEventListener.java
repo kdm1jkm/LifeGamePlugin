@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -108,6 +109,35 @@ public class ShopEventListener implements Listener {
                 }
             } catch (NumberFormatException e) {
                 p.sendMessage(ChatColor.YELLOW + "[LifeGame] " + ChatColor.RED + event.getMessage() + "은(는) 유효한 값이 아닙니다.");
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlaceBlock(SignChangeEvent event) {
+        Player p = event.getPlayer();
+
+        if (event.getLine(0).equals("[SHOP]")) {
+            if (!p.isOp()) {
+                event.setCancelled(true);
+                p.sendMessage(ChatColor.YELLOW + "[LifeGame] " + ChatColor.RED + "권한이 부족해 상점을 만들 수 없습니다.");
+                return;
+            }
+
+            Material sellMaterial = Material.getMaterial(event.getLine(1).toUpperCase());
+            if (sellMaterial == null) {
+                event.setCancelled(true);
+                p.sendMessage(ChatColor.YELLOW + "[LifeGame] " + ChatColor.RED + "유효하지 않은 아이템 이름입니다.");
+                return;
+            }
+
+            try {
+                int price = Integer.parseInt(event.getLine(2));
+                if (price < 0) throw new Exception("가격은 음수가 될 수 없습니다.");
+                p.sendMessage(ChatColor.YELLOW + "[LifeGame] " + ChatColor.WHITE + sellMaterial.toString() + "상품을 " + event.getLine(2) + "원으로 판매합니다.");
+            } catch (Exception e) {
+                p.sendMessage(ChatColor.YELLOW + "[LifeGame] " + ChatColor.RED + "유효하지 않은 가격입니다.");
+                event.setCancelled(true);
             }
         }
     }
