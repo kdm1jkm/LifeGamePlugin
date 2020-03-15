@@ -5,3 +5,7 @@ api-version: 1.13
 commands:
   money:
     description: money commands for LifeGame
+  region:
+    description: region command for LifeGame
+  rrr:
+    description: rrr
