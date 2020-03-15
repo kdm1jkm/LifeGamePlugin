@@ -20,6 +20,7 @@ public class RegionCommandTapCompletion implements TabCompleter {
                 result.add("back");
                 result.add("create");
                 result.add("set");
+                result.add("list");
                 break;
         }
 

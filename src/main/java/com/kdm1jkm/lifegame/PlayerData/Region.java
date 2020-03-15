@@ -9,6 +9,23 @@ import java.util.UUID;
 
 public class Region {
     private int x1, z1, x2, z2;
+
+    public int getX1() {
+        return x1;
+    }
+
+    public int getZ1() {
+        return z1;
+    }
+
+    public int getX2() {
+        return x2;
+    }
+
+    public int getZ2() {
+        return z2;
+    }
+
     private UUID worldUUID;
     private String regionName;
 

@@ -10,6 +10,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
@@ -82,6 +83,13 @@ public class RegionManager {
         }
         else {
             p.sendMessage(KeyWord.PREFIX_WARNING + "Pos1과 Pos2를 모두 선택해 주십시오.");
+        }
+    }
+
+    public void regionList(Player p){
+        p.sendMessage(KeyWord.PREFIX_NORMAL + "--------지역 목록--------");
+        for(Region r : data.getPlayer(p).Regions().get()){
+            p.sendMessage(KeyWord.PREFIX_NORMAL + r.getName() + " X: " + r.getX1() + ", Z: " + r.getZ1());
         }
     }
 

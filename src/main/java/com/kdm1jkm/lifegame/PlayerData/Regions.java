@@ -3,7 +3,6 @@ package com.kdm1jkm.lifegame.PlayerData;
 import org.bukkit.Location;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 public class Regions {
@@ -21,8 +20,8 @@ public class Regions {
         data.remove(region);
     }
 
-    public Iterator<Region> iterator() {
-        return data.iterator();
+    public Set<Region> get() {
+        return data;
     }
 
     public boolean isIn(Location location) {

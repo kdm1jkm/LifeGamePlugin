@@ -2,7 +2,6 @@ package com.kdm1jkm.lifegame.Shop;
 
 import com.kdm1jkm.lifegame.KeyWord;
 import com.kdm1jkm.lifegame.PlayerData.PlayerData;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -16,9 +15,14 @@ public class ShopManager {
     private Map<UUID, SellInfo> waitingList = new HashMap<>();
     private PlayerData data;
 
+    public ShopManager(PlayerData data) {
+        this.data = data;
+    }
+
     /**
      * 플레이어가 상점을 클릭했을때 처리. waitingList에 플레이어를 추가하고 안내메세지를 띄운다.
-     * @param p 거래를 진행할 플레이어
+     *
+     * @param p     거래를 진행할 플레이어
      * @param lines 표지판 내용
      */
     public void chooseShop(Player p, String[] lines) {
@@ -50,7 +54,8 @@ public class ShopManager {
 
     /**
      * 채팅이 유효한 값인지 검사 후 판매 진행
-     * @param p 판매를 진행할 플레이어
+     *
+     * @param p    판매를 진행할 플레이어
      * @param chat 플레이어가 친 채팅
      */
     public void sell(Player p, String chat) {
@@ -99,11 +104,12 @@ public class ShopManager {
 
     /**
      * 상점이 유효한가 검사후 플레이어에게 관련 내용을 메세지로 전달.
-     * @param p 상점을 만드는 플레이어
+     *
+     * @param p     상점을 만드는 플레이어
      * @param lines 표지판 내용
      * @return 이벤트 취소 여부
      */
-    public boolean makeShop(Player p, String[] lines){
+    public boolean makeShop(Player p, String[] lines) {
         if (!p.isOp()) {
             p.sendMessage(KeyWord.PREFIX_WARNING + "권한이 부족해 상점을 만들 수 없습니다.");
             return true;
@@ -123,17 +129,18 @@ public class ShopManager {
             return true;
         }
 
-        if (price < 0){
+        if (price < 0) {
             p.sendMessage(KeyWord.INVALID_AMOUNT);
             return true;
         }
 
-            p.sendMessage(KeyWord.PREFIX_NORMAL + sellMaterial.toString() + "상품을 " + price + "원으로 판매합니다.");
+        p.sendMessage(KeyWord.PREFIX_NORMAL + sellMaterial.toString() + "상품을 " + price + "원으로 판매합니다.");
         return false;
     }
 
     /**
      * 해당 플레이어가 waitingList목록에 있는지를 검사
+     *
      * @param p 검사할 플레이어
      * @return 목록 존재 여부
      */

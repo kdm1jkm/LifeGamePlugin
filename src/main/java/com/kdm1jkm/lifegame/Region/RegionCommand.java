@@ -39,6 +39,10 @@ public class RegionCommand implements CommandExecutor {
                             manager.createRegionStart(p);
                             break;
 
+                        case "list":
+                            manager.regionList(p);
+                            break;
+
                         default:
                             sendErrorCommandMessage(p);
                             break;
