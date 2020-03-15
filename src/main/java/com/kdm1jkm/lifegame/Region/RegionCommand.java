@@ -57,6 +57,7 @@ public class RegionCommand implements CommandExecutor {
                     else{
                         sendErrorCommandMessage(p);
                     }
+                    break;
 
 
                 default:
