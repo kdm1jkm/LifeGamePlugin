@@ -89,7 +89,7 @@ public class RegionManager {
     public void regionList(Player p){
         p.sendMessage(KeyWord.PREFIX_NORMAL + "--------지역 목록--------");
         for(Region r : data.getPlayer(p).Regions().get()){
-            p.sendMessage(KeyWord.PREFIX_NORMAL + r.getName() + " X: " + r.getX1() + ", Z: " + r.getZ1());
+            p.sendMessage(KeyWord.PREFIX_NORMAL + r.getName() + " X: " + r.getX1() + ", Z: " + r.getZ1() + " ~ X: " + r.getX2() + ", Z: " + r.getZ2());
         }
     }
 
