@@ -10,13 +10,23 @@ import java.util.UUID;
 public class Region {
     private int x1, z1, x2, z2;
     private UUID worldUUID;
+    private String regionName;
 
-    public Region(Location location1, Location location2) {
+    public Region(Location location1, Location location2, String regionName) {
         x1 = (int) Math.min(location1.getX(), location2.getX());
         z1 = (int) Math.min(location1.getZ(), location2.getZ());
         x2 = (int) Math.max(location1.getX(), location2.getX());
         z2 = (int) Math.max(location1.getZ(), location2.getZ());
         worldUUID = location1.getWorld().getUID();
+        this.regionName = regionName;
+    }
+
+    public String getName() {
+        return regionName;
+    }
+
+    public void setName(String regionName) {
+        this.regionName = regionName;
     }
 
     public World getWorld() {
@@ -25,7 +35,6 @@ public class Region {
 
     public boolean isIn(Location location) {
         if (location.getWorld() != getWorld()) {
-//            Bukkit.getLogger().info(KeyWord.PREFIX_NORMAL + "Other world");
             return false;
         }
 

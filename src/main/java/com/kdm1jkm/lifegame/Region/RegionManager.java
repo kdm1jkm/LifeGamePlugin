@@ -65,9 +65,9 @@ public class RegionManager {
         return false;
     }
 
-    public void createRegion(Player p) {
+    public void createRegion(Player p, String name) {
         if (waitingPlayers.containsKey(p.getUniqueId()) && waitingPlayers.get(p.getUniqueId()).isSetAll()) {
-            Region newRegion = new Region(waitingPlayers.get(p.getUniqueId()).loc1, waitingPlayers.get(p.getUniqueId()).loc2);
+            Region newRegion = new Region(waitingPlayers.get(p.getUniqueId()).loc1, waitingPlayers.get(p.getUniqueId()).loc2, name);
             waitingPlayers.remove(p.getUniqueId());
 
             for (UUID other : data.getKeySet()) {

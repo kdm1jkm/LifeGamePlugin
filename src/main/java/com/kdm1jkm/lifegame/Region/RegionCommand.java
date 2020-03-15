@@ -39,15 +39,21 @@ public class RegionCommand implements CommandExecutor {
                             manager.createRegionStart(p);
                             break;
 
-                        case "set":
-                            manager.createRegion(p);
-                            break;
-
                         default:
                             sendErrorCommandMessage(p);
                             break;
                     }
                     break;
+
+                case 2:
+
+                    if(args[0].equals("set")){
+                            manager.createRegion(p, args[1]);
+                    }
+                    else{
+                        sendErrorCommandMessage(p);
+                    }
+
 
                 default:
                     sendErrorCommandMessage(p);
@@ -58,7 +64,9 @@ public class RegionCommand implements CommandExecutor {
     }
 
     private void sendErrorCommandMessage(Player p) {
-        p.sendMessage(KeyWord.PREFIX_WARNING + "/realestate tp");
-        p.sendMessage(KeyWord.PREFIX_WARNING + "/realestate back");
+        p.sendMessage(KeyWord.PREFIX_WARNING + "/region tp");
+        p.sendMessage(KeyWord.PREFIX_WARNING + "/region back");
+        p.sendMessage(KeyWord.PREFIX_WARNING + "/region create");
+        p.sendMessage(KeyWord.PREFIX_WARNING + "/region set <RegionName>");
     }
 }
