@@ -87,14 +87,18 @@ public class MoneyCommand implements CommandExecutor {
             }
             return true;
         } else {
-            sender.sendMessage(KeyWord.PREFIX_WARNING + "콘솔에서는 이 명령어를 실행할 수 없습니다.");
+            sender.sendMessage(KeyWord.CONSOLE_DENIED);
         }
 
         return true;
     }
 
     private void sendErrorCommandMessage(Player p) {
-        p.sendMessage(KeyWord.PREFIX_WARNING + "/money : 현재 자신이 가진 돈을 확인합니다.");
-        p.sendMessage(KeyWord.PREFIX_WARNING + "/money send <player> <amount> : <player>에게 <amount>만큼 자신의 돈을 보냅니다.");
+        p.sendMessage(KeyWord.PREFIX_WARNING + "/money");
+        p.sendMessage(KeyWord.PREFIX_WARNING + "/money send <player> <amount>");
+        if(p.isOp()){
+        p.sendMessage(KeyWord.PREFIX_WARNING + "/money add <player> <amount>");
+        p.sendMessage(KeyWord.PREFIX_WARNING + "/money set <player> <amount>");
+        }
     }
 }
