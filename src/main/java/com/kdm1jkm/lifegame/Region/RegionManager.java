@@ -10,7 +10,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
@@ -80,23 +79,21 @@ public class RegionManager {
             p.sendMessage(KeyWord.PREFIX_NORMAL + "사유지를 생성했습니다.");
 
             data.getPlayer(p.getUniqueId()).Regions().add(newRegion);
-        }
-        else {
+        } else {
             p.sendMessage(KeyWord.PREFIX_WARNING + "Pos1과 Pos2를 모두 선택해 주십시오.");
         }
     }
 
-    public void regionList(Player p){
+    public void regionList(Player p) {
         p.sendMessage(KeyWord.PREFIX_NORMAL + "--------지역 목록--------");
-        for(Region r : data.getPlayer(p).Regions().get()){
+        for (Region r : data.getPlayer(p).Regions().get()) {
             p.sendMessage(KeyWord.PREFIX_NORMAL + r.getName() + " X: " + r.getX1() + ", Z: " + r.getZ1() + " ~ X: " + r.getX2() + ", Z: " + r.getZ2());
         }
     }
 
     public boolean checkCollide(Player p, Location location) {
         for (UUID other : data.getKeySet()) {
-            if (other == p.getUniqueId()) continue;
-//            p.sendMessage(KeyWord.PREFIX_NORMAL + "검사중");
+            if (other.equals(p.getUniqueId())) continue;
 
             if (data.getPlayer(other).Regions().isIn(location)) {
                 p.sendMessage(KeyWord.PREFIX_WARNING + "사유지입니다.");
@@ -104,6 +101,14 @@ public class RegionManager {
             }
         }
         return false;
+    }
+
+    public void checkEnterRegion(Player p, Location from, Location to) {
+        for (UUID other : data.getKeySet()) {
+            if (data.getPlayer(other).Regions().isIn(to) && !data.getPlayer(other).Regions().isIn(from)) {
+                p.sendMessage(KeyWord.PREFIX_NORMAL + Bukkit.getPlayer(other).getName() + "님의 지역에 입장하셨습니다.");
+            }
+        }
     }
 
     private class RegionInfo {

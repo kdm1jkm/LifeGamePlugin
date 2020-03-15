@@ -7,6 +7,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 public class RegionEventListener implements Listener {
 
@@ -40,5 +41,10 @@ public class RegionEventListener implements Listener {
         if (manager.checkCollide(event.getPlayer(), event.getBlock().getLocation())) {
             event.setCancelled(true);
         }
+    }
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        manager.checkEnterRegion(event.getPlayer(), event.getFrom(), event.getTo());
     }
 }
