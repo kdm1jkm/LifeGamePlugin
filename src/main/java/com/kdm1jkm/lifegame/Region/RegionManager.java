@@ -22,8 +22,6 @@ public class RegionManager {
         this.data = data;
         this.flatWorld = flatWorld;
         waitingPlayers = new HashMap<>();
-
-        Bukkit.getPluginManager().registerEvents(new RegionEventListener(this), lifeGame);
     }
 
     public void teleportRegionWorld(Player p) {
