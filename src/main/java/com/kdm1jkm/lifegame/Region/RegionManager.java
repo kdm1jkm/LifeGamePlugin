@@ -36,7 +36,7 @@ public class RegionManager {
 
     public void createRegionStart(Player p) {
         waitingPlayers.put(p.getUniqueId(), new RegionInfo());
-        p.sendMessage(KeyWord.PREFIX_NORMAL + "막대기로 범위를 설정하십시오.");
+        p.sendMessage(KeyWord.PREFIX_NORMAL + "나무 호미 범위를 설정하십시오.");
     }
 
     public boolean setRegionLoc1(Player player, Location loc) {
