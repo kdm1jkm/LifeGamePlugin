@@ -12,15 +12,23 @@ import java.util.List;
 public class RegionCommandTapCompletion implements TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
-        List<String> result= new ArrayList<>();
+        List<String> result = new ArrayList<>();
 
-        switch(args.length){
+        switch (args.length) {
             case 1:
                 result.add("tp");
                 result.add("back");
                 result.add("create");
-                result.add("set");
                 result.add("list");
+                break;
+
+            case 2:
+                switch (args[0]) {
+                    case "create":
+                        result.add("start");
+                        result.add("confirm");
+                        break;
+                }
                 break;
         }
 

@@ -1,7 +1,6 @@
 package com.kdm1jkm.lifegame.Region;
 
 import com.kdm1jkm.lifegame.KeyWord;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -35,10 +34,6 @@ public class RegionCommand implements CommandExecutor {
                             manager.teleportBasicWorld(p);
                             break;
 
-                        case "create":
-                            manager.createRegionStart(p);
-                            break;
-
                         case "list":
                             manager.regionList(p);
                             break;
@@ -51,11 +46,43 @@ public class RegionCommand implements CommandExecutor {
 
                 case 2:
 
-                    if(args[0].equals("set")){
-                            manager.createRegion(p, args[1]);
+                    switch (args[0]) {
+                        case "create":
+                            switch (args[1]) {
+                                case "start":
+                                    manager.createRegionStart(p);
+                                    break;
+
+                                default:
+                                    sendErrorCommandMessage(p);
+                                    break;
+
+                            }
+                            break;
+
+                        default:
+                            sendErrorCommandMessage(p);
+                            break;
                     }
-                    else{
-                        sendErrorCommandMessage(p);
+                    break;
+
+                case 3:
+                    switch (args[0]) {
+                        case "create":
+                            switch (args[1]) {
+                                case "confirm":
+                                    manager.createRegion(p, args[2]);
+                                    break;
+
+                                default:
+                                    sendErrorCommandMessage(p);
+                                    break;
+                            }
+                            break;
+
+                        default:
+                            sendErrorCommandMessage(p);
+                            break;
                     }
                     break;
 
