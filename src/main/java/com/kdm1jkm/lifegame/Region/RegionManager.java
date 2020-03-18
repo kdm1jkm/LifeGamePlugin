@@ -167,6 +167,10 @@ public class RegionManager {
         }
     }
 
+    public World getFlatWorld(){
+        return flatWorld;
+    }
+
     private class RegionInfo {
         public Location loc1, loc2;
         public Player targetPlayer;

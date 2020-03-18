@@ -1,5 +1,6 @@
 package com.kdm1jkm.lifegame.Region;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,6 +9,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
 
 public class RegionEventListener implements Listener {
 
@@ -46,5 +48,13 @@ public class RegionEventListener implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         manager.checkEnterRegion(event.getPlayer(), event.getFrom(), event.getTo());
+    }
+
+    @EventHandler
+    public void onPlayerPortal(PlayerPortalEvent event) {
+        if(event.getFrom().getWorld().equals(manager.getFlatWorld())){
+            event.setCancelled(true);
+            event.getPlayer().teleport(new Location(manager.getFlatWorld(), 116, 4, 28));
+        }
     }
 }
