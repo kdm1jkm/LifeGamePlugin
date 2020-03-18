@@ -52,7 +52,7 @@ public final class LifeGame extends JavaPlugin implements Listener {
         regionManager = new RegionManager(data, world, this);
         getServer().getPluginManager().registerEvents(new RegionEventListener(regionManager), this);
         getCommand("region").setExecutor(new RegionCommand(regionManager));
-        getCommand("region").setTabCompleter(new RegionCommandTapCompletion());
+        getCommand("region").setTabCompleter(new RegionCommandTapCompletion(regionManager));
 
         Bukkit.getLogger().info("[LifeGame] Enabling Money System.");
         moneymanager = new MoneyManager(data);

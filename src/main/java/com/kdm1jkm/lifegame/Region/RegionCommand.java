@@ -60,6 +60,10 @@ public class RegionCommand implements CommandExecutor {
                             }
                             break;
 
+                        case "tp":
+                            manager.teleportRegion(p, args[1]);
+                            break;
+
                         default:
                             sendErrorCommandMessage(p);
                             break;

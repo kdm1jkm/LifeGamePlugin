@@ -9,9 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class RegionManager {
     private PlayerData data;
@@ -107,6 +105,22 @@ public class RegionManager {
                 p.sendMessage(KeyWord.PREFIX_NORMAL + Bukkit.getPlayer(other).getName() + "님의 지역에 입장하셨습니다.");
             }
         }
+    }
+
+    public void teleportRegion(Player p, String regionName) {
+        for (Region r : data.getPlayer(p).Regions().get()) {
+            if (r.getName().equals(regionName)) {
+                p.teleport(new Location(flatWorld, r.getX1() - 1, 4, r.getZ1() - 1));
+                p.sendMessage(KeyWord.PREFIX_NORMAL + r.getName() + "(으)로 이동합니다.");
+                return;
+            }
+        }
+
+        p.sendMessage(KeyWord.PREFIX_WARNING + regionName + "은(는) 존재하지 않습니다.");
+    }
+
+    public List<String> getRegions(Player p) {
+        return new ArrayList(data.getPlayer(p).Regions().get());
     }
 
     private class RegionInfo {
