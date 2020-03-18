@@ -27,6 +27,15 @@ public class MoneyCommand implements CommandExecutor {
                     manager.displayMoney(p);
                     break;
 
+                case 1:
+                    Player target = Bukkit.getPlayer(args[0]);
+                    if (target == null) {
+                        p.sendMessage(KeyWord.INVALID_PLAYER);
+                        break;
+                    }
+                    manager.displayMoney(p, target);
+                    break;
+
                 case 3:
                     Player otherPlayer = Bukkit.getPlayer(args[1]);
                     if (otherPlayer == null) {
@@ -85,6 +94,7 @@ public class MoneyCommand implements CommandExecutor {
         p.sendMessage(KeyWord.PREFIX_WARNING + "/money");
         p.sendMessage(KeyWord.PREFIX_WARNING + "/money send <player> <amount>");
         if (p.isOp()) {
+            p.sendMessage(KeyWord.PREFIX_WARNING + "/money <Player>");
             p.sendMessage(KeyWord.PREFIX_WARNING + "/money add <player> <amount>");
             p.sendMessage(KeyWord.PREFIX_WARNING + "/money set <player> <amount>");
         }

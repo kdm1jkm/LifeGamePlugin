@@ -12,7 +12,12 @@ public class MoneyManager {
     }
 
     public void displayMoney(Player p) {
-        p.sendMessage(KeyWord.PREFIX_NORMAL + "Money: " + data.getPlayer(p).money().get() + "원");
+        displayMoney(p, p);
+    }
+
+
+    public void displayMoney(Player subject, Player target) {
+        subject.sendMessage(KeyWord.PREFIX_NORMAL + target.getName() + "의 돈은 " + data.getPlayer(target).money().get() + "원입니다.");
     }
 
     public void addMoney(Player player, Player otherPlayer, int amount) {
