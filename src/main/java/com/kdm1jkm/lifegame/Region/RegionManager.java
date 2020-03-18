@@ -33,8 +33,13 @@ public class RegionManager {
     }
 
     public void createRegionStart(Player p) {
-        waitingPlayers.put(p.getUniqueId(), new RegionInfo());
-        p.sendMessage(KeyWord.PREFIX_NORMAL + "나무 호미로 범위를 설정하십시오.");
+        createRegionStart(p, p);
+    }
+
+    public void createRegionStart(Player subject, Player target) {
+        if(waitingPlayers.containsKey(subject.getUniqueId()))return;
+        waitingPlayers.put(subject.getUniqueId(), new RegionInfo(target));
+        subject.sendMessage(KeyWord.PREFIX_NORMAL + "나무 호미로 범위를 설정하십시오.");
     }
 
     public boolean setRegionLoc1(Player player, Location loc) {
@@ -62,28 +67,40 @@ public class RegionManager {
     }
 
     public void createRegion(Player p, String name) {
-        if (waitingPlayers.containsKey(p.getUniqueId()) && waitingPlayers.get(p.getUniqueId()).isSetAll()) {
-            Region newRegion = new Region(waitingPlayers.get(p.getUniqueId()).loc1, waitingPlayers.get(p.getUniqueId()).loc2, name);
-            waitingPlayers.remove(p.getUniqueId());
-
-            for (UUID other : data.getKeySet()) {
-                if (data.getPlayer(other).Regions().isCollide(newRegion)) {
-                    p.sendMessage(KeyWord.PREFIX_WARNING + "다른 사유지와 겹칩니다.");
-                    return;
-                }
-            }
-            p.sendMessage(KeyWord.PREFIX_NORMAL + "사유지를 생성했습니다.");
-
-            data.getPlayer(p.getUniqueId()).Regions().add(newRegion);
-        } else {
+        if (!waitingPlayers.containsKey(p.getUniqueId()) || !waitingPlayers.get(p.getUniqueId()).isSetAll()) {
             p.sendMessage(KeyWord.PREFIX_WARNING + "Pos1과 Pos2를 모두 선택해 주십시오.");
+            return;
         }
+
+        Region newRegion = new Region(waitingPlayers.get(p.getUniqueId()).loc1, waitingPlayers.get(p.getUniqueId()).loc2, name);
+        Player target = waitingPlayers.get(p.getUniqueId()).targetPlayer;
+        waitingPlayers.remove(p.getUniqueId());
+
+        for (UUID other : data.getKeySet()) {
+            if (data.getPlayer(other).Regions().isCollide(newRegion)) {
+                p.sendMessage(KeyWord.PREFIX_WARNING + "다른 사유지와 겹칩니다.");
+                return;
+            }
+        }
+
+        if (p == target) {
+            p.sendMessage(KeyWord.PREFIX_NORMAL + "사유지를 생성했습니다.");
+        } else {
+            p.sendMessage(KeyWord.PREFIX_NORMAL + target.getName() + "의 사유지를 생성했습니다.");
+            target.sendMessage(KeyWord.PREFIX_NORMAL + p.getName() + "이(가) 당신의 사유지를 생성했습니다.");
+        }
+
+        data.getPlayer(target.getUniqueId()).Regions().add(newRegion);
     }
 
     public void regionList(Player p) {
-        p.sendMessage(KeyWord.PREFIX_NORMAL + "--------지역 목록--------");
-        for (Region r : data.getPlayer(p).Regions().get()) {
-            p.sendMessage(KeyWord.PREFIX_NORMAL + r.getName() + " X: " + r.getX1() + ", Z: " + r.getZ1() + " ~ X: " + r.getX2() + ", Z: " + r.getZ2());
+        regionList(p, p);
+    }
+
+    public void regionList(Player check, Player send) {
+        send.sendMessage(KeyWord.PREFIX_NORMAL + "--------지역 목록--------");
+        for (Region r : data.getPlayer(check).Regions().get()) {
+            send.sendMessage(KeyWord.PREFIX_NORMAL + r.getName() + " X: " + r.getX1() + ", Z: " + r.getZ1() + " ~ X: " + r.getX2() + ", Z: " + r.getZ2());
         }
     }
 
@@ -119,15 +136,47 @@ public class RegionManager {
         p.sendMessage(KeyWord.PREFIX_WARNING + regionName + "은(는) 존재하지 않습니다.");
     }
 
+    public void deleteRegion(Player p, String regionName) {
+        for (Region r : data.getPlayer(p).Regions().get()) {
+            if (r.getName().equals(regionName)) {
+                data.getPlayer(p).Regions().remove(r);
+                p.sendMessage(KeyWord.PREFIX_NORMAL + r.getName() + "을(를) 삭제합니다.");
+                return;
+            }
+        }
+
+        p.sendMessage(KeyWord.PREFIX_WARNING + regionName + "은(는) 존재하지 않습니다.");
+    }
+
     public List<String> getRegions(Player p) {
-        return new ArrayList(data.getPlayer(p).Regions().get());
+        List<String> result = new ArrayList<>();
+
+        for (Region r : data.getPlayer(p).Regions().get()) {
+            result.add(r.getName());
+        }
+
+        return result;
+    }
+
+    public boolean checkPermissionDeny(Player p) {
+        if (p.isOp()) {
+            return false;
+        } else {
+            p.sendMessage(KeyWord.PERMISSION_DENIED);
+            return true;
+        }
     }
 
     private class RegionInfo {
         public Location loc1, loc2;
+        public Player targetPlayer;
+
+        public RegionInfo(Player targetPlayer) {
+            this.targetPlayer = targetPlayer;
+        }
 
         public boolean isSetAll() {
-            return loc1 != null && loc2 != null;
+            return loc1 != null && loc2 != null && targetPlayer != null;
         }
     }
 }
