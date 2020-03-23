@@ -30,7 +30,25 @@ public class ShopManager {
             String sellItem = lines[1].toUpperCase();
             int sellPrice = Integer.parseInt(lines[2]);
 
-            Material sellItemMaterial = Material.getMaterial(sellItem);
+            Material sellItemMaterial;
+
+            switch(sellItem){
+                case "FSE":
+                    sellItemMaterial = Material.FERMENTED_SPIDER_EYE;
+                    break;
+
+                case "COS":
+                    sellItemMaterial = Material.CARROT_ON_A_STICK;
+                    break;
+
+                case "DD":
+                    sellItemMaterial = Material.DAYLIGHT_DETECTOR;
+                    break;
+
+                default:
+                    sellItemMaterial = Material.getMaterial(sellItem);
+                    break;
+            }
 
             if (sellItemMaterial == null) return;
 
@@ -48,7 +66,7 @@ public class ShopManager {
             waitingList.remove(p.getUniqueId());
             waitingList.put(p.getUniqueId(), new SellInfo(sellItemMaterial, itemCount, sellPrice));
 
-            p.sendMessage(KeyWord.PREFIX_NORMAL + sellItem + "아이템을 몇 개 판매하시겠습니까? (현재 보유 갯수: " + itemCount + "개)");
+            p.sendMessage(KeyWord.PREFIX_NORMAL + sellItemMaterial.toString() + "아이템을 몇 개 판매하시겠습니까? (현재 보유 갯수: " + itemCount + "개)");
         }
     }
 
@@ -115,7 +133,26 @@ public class ShopManager {
             return true;
         }
 
-        Material sellMaterial = Material.getMaterial(lines[1].toUpperCase());
+        Material sellMaterial;
+
+        switch (lines[1]) {
+            case "fse":
+                sellMaterial = Material.FERMENTED_SPIDER_EYE;
+                break;
+
+            case "cos":
+                sellMaterial = Material.CARROT_ON_A_STICK;
+                break;
+
+            case "dd":
+                sellMaterial = Material.DAYLIGHT_DETECTOR;
+                break;
+
+            default:
+                sellMaterial = Material.getMaterial(lines[1].toUpperCase());
+                break;
+        }
+
         if (sellMaterial == null) {
             p.sendMessage(KeyWord.PREFIX_WARNING + "유효하지 않은 아이템 이름입니다.");
             return true;
