@@ -108,7 +108,7 @@ public class RegionManager {
         for (UUID other : data.getKeySet()) {
             if (other.equals(p.getUniqueId())) continue;
 
-            if (data.getPlayer(other).Regions().isIn(location)) {
+            if (data.getPlayer(other).Regions().isIn(location) && !p.isOp()) {
                 p.sendMessage(KeyWord.PREFIX_WARNING + "사유지입니다.");
                 return true;
             }
@@ -169,6 +169,16 @@ public class RegionManager {
 
     public World getFlatWorld(){
         return flatWorld;
+    }
+
+    public boolean checkHasRightToInteract(Location loc, Player p){
+        if(data.getPlayer(p).Regions().isIn(loc) || p.isOp() || p.getWorld().equals(flatWorld)){
+            return false;
+        }
+        else{
+            p.sendMessage(KeyWord.PERMISSION_DENIED);
+            return true;
+        }
     }
 
     private class RegionInfo {
