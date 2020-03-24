@@ -64,8 +64,14 @@ public class ShopManager {
             }
 
             waitingList.remove(p.getUniqueId());
-            waitingList.put(p.getUniqueId(), new SellInfo(sellItemMaterial, itemCount, sellPrice));
 
+            if(itemCount == 0){
+                p.sendMessage(KeyWord.PREFIX_WARNING + sellItemMaterial.toString() + "아이템을 가지고 있지 않습니다!");
+                return;
+            }
+
+            waitingList.put(p.getUniqueId(), new SellInfo(sellItemMaterial, itemCount, sellPrice));
+            
             p.sendMessage(KeyWord.PREFIX_NORMAL + sellItemMaterial.toString() + "아이템을 몇 개 판매하시겠습니까? (현재 보유 갯수: " + itemCount + "개)");
         }
     }
